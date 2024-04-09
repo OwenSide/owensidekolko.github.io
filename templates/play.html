@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe - Game {{ game_id }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="../static/icons8-крестики-нолики-50.png" type="image/x-icon">
+    <style>
+        body{
+            background: url('../static/12312412.gif') repeat;
+            color: #000; 
+            font-family: 'Roboto', sans-serif;
+            font-weight: 700;
+            
+        }
+        a{
+            text-decoration: none;
+            color: inherit;
+        }
+        .box{
+            display: block;
+            text-align: center;
+            height: 100vh;
+        }
+        .box__inner{
+            display: block;
+            margin: 0 auto;
+            position: fixed;
+            right: 11%;
+        }
+        table {
+            border-collapse: collapse;
+            width: 300px;
+            height: 300px;
+        }
+
+        td {
+            border: 3px solid black;
+            width: 100px;
+            height: 100px;
+            text-align: center;
+            font-size: 4em;
+            font-weight: 700;
+            cursor: pointer;
+            -webkit-transition:all 0.5s linear;
+            -moz-transition:all 0.5s linear;
+            -o-transition:all 0.5s linear;
+            transition:all 0.5s linear;
+            -moz-box-shadow: 2px 2px 4px 0px #006773;
+            -webkit-box-shadow:  2px 2px 4px 0px #006773;
+            box-shadow: 2px 2px 4px 0px rgb(47, 43, 36);
+        }
+        td:hover{
+            -webkit-box-shadow: 15px 15px 20px rgba(0,0, 0, 0.4);
+            -moz-box-shadow: 15px 15px 20px rgba(0,0, 0, 0.4);
+            box-shadow: 15px 15px 20px rgba(0,0, 0, 0.4);
+        }
+        .box__button{
+            color: white;
+            background-color: black;
+            padding: 15px;
+            border: 1px solid black;
+            border-radius: 15px;
+            transition: all .5s;
+            margin-top: 20px;
+        }
+        .box__button:hover{
+            color: black;
+            background-color: white;
+        }
+        .box__button:active{
+            color: black;
+            background-color: aqua;
+        }
+        .a span{
+            color: green;
+        }
+
+        @media (max-width: 500) {   
+            .box__inner{
+                right: 1%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div class="box__inner">
+
+            <h1 class="title">Tic Tac Toe - Game {{ game_id }}</h1>
+
+            <table style="margin: 20px auto 50px;">
+                <tr>
+                    {% for i in range(0, 3) %}
+                        <td><a href="{{ url_for('make_move', game_id=game_id, position=i) }}" style="color: aqua;">{{ get_move_symbol(moves, i) }}</a></td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    {% for i in range(3, 6) %}
+                        <td><a href="{{ url_for('make_move', game_id=game_id, position=i) }}" style="color: tomato;">{{ get_move_symbol(moves, i) }}</a></td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    {% for i in range(6, 9) %}
+                        <td><a href="{{ url_for('make_move', game_id=game_id, position=i) }}" style="color: hotpink;">{{ get_move_symbol(moves, i) }}</a></td>
+                    {% endfor %}
+                </tr>
+            </table>
+
+            {% if '-' not in board %}
+                <p style="font-size: 18px;">Draw!</p>
+                <p><a class="box__button" href="{{ url_for('new_game') }}">Rozpocznij nową grę</a></p>
+            {% elif winner %}
+                <p style="font-size: 18px;">Gra zakończona. Win: {{ winner }}</p>
+                <p><a class="box__button" href="{{ url_for('new_game') }}">Rozpocznij nową grę</a></p>
+            {% endif %}
+
+        </div>
+    </div>
+</body>
+</html>
